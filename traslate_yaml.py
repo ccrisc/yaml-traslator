@@ -7,7 +7,7 @@ import json
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# Configurazione
+# Set-up
 input_file = 'it.yml'
 output_file = 'en.yml'
 source_lang = 'it'
