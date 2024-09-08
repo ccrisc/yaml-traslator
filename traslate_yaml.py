@@ -47,13 +47,13 @@ def translate_text(key, text):
     # prevent Rate limit error with time sleep
     time.sleep(request_interval)
 
-    # Meccanismi di retry
+    # Manage retries
     for attempt in range(retry_limit + 1):
         try:
             translated_text = translator.translate(text)
             break
         except Exception as e:
-            print(f"Tentativo {attempt + 1} - Error translating key: {key}. Error: {e}")
+            print(f"Attempt {attempt + 1} - Error translating key: {key}. Error: {e}")
             if "429" in str(e) or "Server Error" in str(e):  # Rate limit error
                 print("Rate limit error encountered. Stopping execution immediately.")
                 sys.exit("Stopping execution due to rate limit errors.") #Stop execution with Rate limit error
@@ -143,7 +143,7 @@ def translate_yaml(input_file, output_file, source_lang, target_lang, workers):
             except Exception as e:
                 print(f"Error in future result for key {key}: {e}")
 
-    # Unflatten content e aggiorna YAML
+    # Unflatten content and update YAML
     translated_content = unflatten_yaml(translated_flattened_content)
     yaml_content.update(translated_content)
 
